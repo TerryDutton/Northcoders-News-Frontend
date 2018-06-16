@@ -1,33 +1,32 @@
 import React from 'react'; 
 import axios from 'axios';
 import source from './source';
+import RenderUserData from './RenderUserData';
+import RenderError from './RenderError';
 
 class UserList extends React.Component{
   state = {
-    users: []
+    users: [], 
+    err: null
   }
 
   componentDidMount(){
-    const {username} = this.props.match.params;
-    return axios.get(`${source}/users${username ? `/${username}` : ''}`)
+    return axios.get(`${source}/users`)
     .then(({data}) => {
-      let {users, user} = data;
-      users = users ? users : [user];  
-      return this.setState({users});
+      let {users} = data; 
+      return this.setState({users, err: null});
     })
-    .catch(err => console.log(err)); 
+    .catch(err => {
+      console.log(err); 
+      return this.setState({err}); 
+    }); 
   }
 
   render(){
-    return(
+    const {users, err} = this.state;
+    return err ? <RenderError err={err}/> : (
       <ul>
-        {this.state.users.map(({username, name, avatar_url, _id}) => {
-          return <li key={`${_id}UserLi`}>
-            <h1>{username}</h1>
-            <h6>{name}</h6>
-            <img src={avatar_url} alt={`The avatar for user ${username}`}/>
-          </li>
-        })}
+        {users.map(user => <RenderUserData key={`${user._id}Main`} user={user}/>)}
       </ul>
     );
   }

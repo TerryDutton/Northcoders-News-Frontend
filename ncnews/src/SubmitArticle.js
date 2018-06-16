@@ -57,7 +57,7 @@ class SubmitArticle extends React.Component {
     })
     .catch(err => {
       this.setState({
-        message: `There was an error submitting your article. The server responded with "${err.message}".`
+        message: `There was an error submitting your article. Please try again, check your network settings, or refresh the page.`
       });
     });
   }

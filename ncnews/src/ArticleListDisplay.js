@@ -1,11 +1,13 @@
 import React from 'react'; 
 import axios from 'axios';
 import source from './source';
-import {Link} from 'react-router-dom';
+import RenderArticleList from './RenderArticleList';
+import RenderError from './RenderError';
 
 class ArticleListDisplay extends React.Component {
   state = {
-    articles:[]
+    articles:[], 
+    err: null
   }
 
   componentDidMount(){
@@ -20,22 +22,8 @@ class ArticleListDisplay extends React.Component {
 
   render(){
     const {topicID} = this.props.match.params;
-    return (
-      <ul>
-        {this.state.articles.map(article => {
-          const {_id, created_by, belongs_to} = article;
-          return (
-            <li key={`${_id}Li`}>
-                <h6 key={`${_id}h6`}>
-                  <Link key={`${_id}ArtLink`} to={`/api/articles/${_id}`}>{`${article.title}`}</Link>{`, by `}
-                  <Link key={`${_id}UserLink`} to={`/api/users/${created_by.username}`}>{`${created_by.username}`}</Link>
-                  {!topicID && <React.Fragment>{` in `}<Link key={`${_id}UserLink`} to={`/api/topics/${belongs_to._id}/articles`}>{`${belongs_to.title}`}</Link></React.Fragment>}
-                </h6>
-            </li>
-          );
-        })}
-      </ul>
-    );
+    const {articles, err} = this.state;
+    return err ? <RenderError err={err}/> : <RenderArticleList articles={articles} topicID={topicID}/>;
   }
 
   getArticles = topicID => {
@@ -43,9 +31,12 @@ class ArticleListDisplay extends React.Component {
     return axios.get(path)
       .then(({data}) => {
         const {articles} = data;
-        return this.setState({articles});
+        return this.setState({articles, err: null});
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err); 
+        return this.setState({err});
+      });
   }
 }
 

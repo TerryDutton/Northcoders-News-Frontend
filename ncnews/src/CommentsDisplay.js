@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import source from './source';
 import axios from 'axios';
 import SubmitComment from './SubmitComment.js'; 
-import VoteButtons from './VoteButtons';
-import {Link} from 'react-router-dom';
+import RenderComments from './RenderComments';
+import RenderError from './RenderError';
 
 class CommentsDisplay extends React.Component {
   state = {
     comments: [], 
-    commentBody: ''
+    commentBody: '', 
+    err: null, 
+    postMsg: ''
   }
 
   componentDidMount(){
@@ -22,31 +24,18 @@ class CommentsDisplay extends React.Component {
   } 
 
   render(){
-    const {comments} = this.state;
+    const {comments, err, postMsg} = this.state;
     const {user} = this.props;
-    return(
+    return err ? <RenderError err={err}/> : (
       <div>
-        {user ? <SubmitComment handleInput={this.handleInput} handleSubmit={this.handleSubmit}/> : <p>You must be logged in to leave comments</p>}
+        {user ? 
+          <Fragment>
+            <SubmitComment handleInput={this.handleInput} handleSubmit={this.handleSubmit}/>
+            <p>{postMsg}</p>
+          </Fragment> : <p>You must be logged in to leave comments</p>
+        }
         <h4>{`${comments.length} comments`}</h4>
-        <ul>
-          {comments.slice().sort((thisComment, thatComment) => thatComment.created_at - thisComment.created_at).map(comment => {
-            const {created_at, votes, _id, body, created_by} = comment;
-            const {username} = created_by;
-            const userID = created_by._id; 
-            return (
-              <li key={`${_id}Li`}>
-                <p key={`${_id}p`}>{body}</p>
-                <h6 key={`${_id}h6`}>{`submitted ${'' + new Date(created_at)} by `}<Link to={`/api/users/${username}`}>{`${username}`}</Link></h6>
-                <span>
-                  {`Votes: ${votes}`}
-                  <VoteButtons voteFunction={this.voteOnComment} targetID={_id}/>
-                  {user && userID === user._id && <button key={`${_id}b3`} onClick={() => this.deleteComment(_id)}>Delete Comment</button>}
-                </span>
-                
-              </li>
-            );
-          })}
-        </ul>
+        <RenderComments comments={comments} voteFunction={this.voteOnComment} deleteComment={this.deleteComment} user={user} />
       </div>
     );
   }
@@ -56,9 +45,13 @@ class CommentsDisplay extends React.Component {
     return axios.get(path)
     .then(({data}) => {
       const {comments} = data; 
-      return this.setState({comments});
+      comments.sort((thisComment, thatComment) => thatComment.created_at - thisComment.created_at);
+      return this.setState({comments, err: null});
     })
-    .catch(err => console.log(err)); 
+    .catch(err => {
+      console.log(err);
+      return this.setState({err});
+    }); 
   }
 
   voteOnComment = (commentID, vote) => {
@@ -92,7 +85,10 @@ class CommentsDisplay extends React.Component {
 
       return axios.post(`${source}/articles/${articleID}/comments`, newComment)
       .then(() => this.getComments(articleID))
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        return this.setState({postMsg: 'An error occurred. Please try again, or try refreshing the page.'})
+      });
     }
   }
 
