@@ -19,14 +19,17 @@ class ArticleListDisplay extends React.Component {
   }
 
   render(){
+    const {topicID} = this.props.match.params;
     return (
       <ul>
         {this.state.articles.map(article => {
-          const {_id} = article;
+          const {_id, created_by, belongs_to} = article;
           return (
             <li key={`${_id}Li`}>
                 <h6 key={`${_id}h6`}>
-                  <Link key={`${_id}Link`} to={`/api/articles/${_id}`}>{`${article.title}, by ${article.created_by.username}`}</Link>
+                  <Link key={`${_id}ArtLink`} to={`/api/articles/${_id}`}>{`${article.title}`}</Link>{`, by `}
+                  <Link key={`${_id}UserLink`} to={`/api/users/${created_by.username}`}>{`${created_by.username}`}</Link>
+                  {!topicID && <React.Fragment>{` in `}<Link key={`${_id}UserLink`} to={`/api/topics/${belongs_to._id}/articles`}>{`${belongs_to.title}`}</Link></React.Fragment>}
                 </h6>
             </li>
           );

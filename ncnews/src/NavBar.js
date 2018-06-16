@@ -1,23 +1,24 @@
-import React from 'react';
-import source from './source'; 
-import {Route, Link, Router} from 'react-router-dom';
+import React from 'react'; 
+import {Link} from 'react-router-dom';
 
-function NavBar({topics}){
+function NavBar({topics = []}){
   const allArticles = <Link to={`/api/articles`}>{'All Articles'}</Link>;
-  return !topics ? null : (
+  const submitArticles = <Link to={`/api/articles/submit`}>{'Submit Article'}</Link>;
+  return (
       <ul>
         {[
           <li key='allArticlesLi'>{allArticles}</li>,
           ...topics.map(topic => {
             return (
               <li key={topic._id}>
-                <Link to={`/api/${topic._id}/articles`}>{topic.title}</Link>
+                <Link to={`/api/topics/${topic._id}/articles`}>{topic.title}</Link>
               </li>
             );
-        })]}
+          }),
+          <li key='submitArticlesLi'>{submitArticles}</li> 
+        ]}
       </ul>
   );
-
 }
 
 export default NavBar; 
