@@ -57,9 +57,10 @@ class App extends Component {
           <Route path={`/api/topics/:topicID/articles`} render={props => <ArticleListDisplay {...props} mainList={true}/>}/>
           <Route path={`/api/users/:username`} component={UserPage}/>
           <Route path={`/api/users`} component={UserList}/>
+          <Route path={`/api/*`} render={props => <RenderError {...props} err={{response: {status: 404}}}/>}/>
           <Route path={`/api`} component={Welcome}/>
-          <Route path={`/`} component={Welcome}/>
           <Route path={`/*`} render={props => <RenderError {...props} err={{response: {status: 404}}}/>}/>
+          <Route path={`/`} component={Welcome}/>
         </Switch>}
       </div>
       </BrowserRouter>
