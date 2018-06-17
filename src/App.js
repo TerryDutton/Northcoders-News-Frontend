@@ -40,17 +40,21 @@ class App extends Component {
       <BrowserRouter>
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title"><Link to={`/api`}>NCNews</Link></h1>
-          <LogBar user={this.state.user} logIn={this.logIn} logOut={this.logOut}/>
-          <span>{loginErr}</span>
-          <NavBar topics={this.state.topics}/>
+          <div className="header-top">
+            <h1 className="App-title"><Link to={`/api`}>Northcoders News</Link></h1>
+            <span className="loginContainer">
+              <span>{loginErr}</span>
+              <LogBar user={user} logIn={this.logIn} logOut={this.logOut}/>
+            </span>
+          </div>
+          <NavBar topics={topics}/>
         </header>
         {err ? <RenderError err={err}/> : <Switch>
           <Route path={`/api/articles/:articleID/comments`} render={props => <CommentsDisplay {...props} user={user}/>}/>
           <Route path={`/api/articles/submit`} render={props => <SubmitArticle {...props} topics={topics} user={user}/>}/>
           <Route path={`/api/articles/:articleID`} render={props => <SingleArticleDisplay {...props} user={user}/>}/>
-          <Route path={`/api/articles`} component={ArticleListDisplay}/>
-          <Route path={`/api/topics/:topicID/articles`} component={ArticleListDisplay}/>
+          <Route path={`/api/articles`} render={props => <ArticleListDisplay {...props} mainList={true}/>}/>
+          <Route path={`/api/topics/:topicID/articles`} render={props => <ArticleListDisplay {...props} mainList={true}/>}/>
           <Route path={`/api/users/:username`} component={UserPage}/>
           <Route path={`/api/users`} component={UserList}/>
           <Route path={`/api`} component={Welcome}/>

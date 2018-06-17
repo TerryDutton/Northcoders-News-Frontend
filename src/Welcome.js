@@ -32,16 +32,16 @@ class Welcome extends React.Component {
     const commentStats = this.assessData(comments); 
     const articleStats = this.assessData(articles); 
     return err ? <RenderError err={err}/> : (
-      <div>
-        <h1>Welcome to Northcoders News!</h1>
-        <h3>{`We have ${articles.length} articles by ${articleStats.totalNumberOf} authors for you to browse, and ${comments.length} comments by ${commentStats.totalNumberOf} commenters you can add to.`}</h3>
-        <RenderWelcomeStats stats={articleStats} job={'author'} product={'articles'}/>
-        <RenderWelcomeStats stats={commentStats} job={'commenter'} product={'comments'}/>
-        <div>
+      <div className="welcomePage">
+        <h1 id="welcomeTitle">Welcome to Northcoders News!</h1>
+        <h3 id="welcomeGeneralStats">{`We have ${articles.length} articles by ${articleStats.totalNumberOf} authors for you to browse, and ${comments.length} comments by ${commentStats.totalNumberOf} commenters you can add to.`}</h3>
+        <RenderWelcomeStats id="authorStats" stats={articleStats} job={'author'} product={'articles'}/>
+        <RenderWelcomeStats id="commenterStats "stats={commentStats} job={'commenter'} product={'comments'}/>
+        <div id="welcomeArticles">
           <h4>Our most popular articles</h4>
           <RenderArticleList articles={articles.slice(0,10)}/>
         </div>
-        <div>
+        <div id="welcomeComments">
           <h4>Our most recent comments</h4>
           <RenderComments comments={comments.slice(0,10)}/>
         </div>

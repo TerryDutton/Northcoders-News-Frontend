@@ -6,7 +6,7 @@ function NavBar({topics = []}){
   const submitArticles = <NavLink exact to={`/api/articles/submit`}>{'Submit Article'}</NavLink>;
   const allUsers = <NavLink exact to={`/api/users`}>{'User List'}</NavLink>;
   return (
-      <ul>
+      <ul className={"navBar-ul"}>
         <li>{allArticles}</li>
         {topics.map(topic => <li key={topic._id}><NavLink exact to={`/api/topics/${topic._id}/articles`}>{`${topic.title} Articles`}</NavLink></li>)}
         <li>{submitArticles}</li>

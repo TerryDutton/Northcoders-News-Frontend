@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 
 class LogBar extends React.Component{
@@ -9,13 +9,13 @@ class LogBar extends React.Component{
   render(){
     const {user, logOut} = this.props; 
 
-    return user ? <div>
-      <h6>Welcome, <Link to={`/api/users/${user.username}`}>{(user.name || '').split(' ')[0] || user.username}</Link></h6>
+    return (<span> {user ? <Fragment>
+      <h6 className="loginWelcome">Welcome, <Link to={`/api/users/${user.username}`}>{(user.name || '').split(' ')[0] || user.username}</Link></h6>
       <input type="button" value="Log Out" onClick={logOut}/>
-    </div> : <div>
+    </Fragment> : <Fragment>
       <input type="text" onChange={this.handleInput} onKeyUp={this.handleKeyPress}/>
       <input type="button" value="Log In" onClick={this.handleLogin}/>
-    </div>
+    </Fragment>} </span>);
   }
 
   handleKeyPress = e => {

@@ -22,8 +22,9 @@ class ArticleListDisplay extends React.Component {
 
   render(){
     const {topicID} = this.props.match.params;
+    const {mainList} = this.props;
     const {articles, err} = this.state;
-    return err ? <RenderError err={err}/> : <RenderArticleList articles={articles} topicID={topicID}/>;
+    return err ? <RenderError err={err}/> : <RenderArticleList articles={articles} mainList={mainList} topicID={topicID}/>;
   }
 
   getArticles = topicID => {

@@ -1,5 +1,15 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: black; 
+}
 .App {
   /*text-align: center;*/
+  color: white;
 }
 
 .App-logo {
@@ -9,18 +19,121 @@
 
 .App-header {
   background-color: #222;
-  /* height: 150px;
-  padding: 20px; */
-  color: white;
 }
 
 .App-title {
   font-size: 1.5em;
-  
+  color: #c31432;
+  display: inline;
+  vertical-align: middle;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ a {
+  color: #c31432;
+  text-decoration: none;
 }
 
 .App-intro {
   font-size: large;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.navBar-ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.navBar-ul > li {
+  display: inline;
+}
+
+.loginWelcome {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.welcomePage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 5%;
+  margin: 20px;
+  
+}
+
+.welcomeArticleList > li {
+  margin-bottom: 15px;
+}
+
+#welcomeTitle, #welcomeGeneralStats {
+  grid-column: 1 / 3;
+  text-align: center;
+}
+
+ .oddList {
+  background-color: #333;
+}
+
+.evenList {
+  background-color: #222;
+}
+
+.mainArticleList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-evenly;
+  grid-column-gap: 10%;
+  grid-row-gap: 20px;
+  margin: 20px;
+}
+
+.articleListEntry {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; 
+}
+
+#articleListTitle {
+  grid-column: 1 / 4;
+  grid-row: 1;
+  text-align: left;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+#articleListPreview {
+  grid-column: 1/4;
+  grid-row: 2;
+}
+
+#articleListAuthor {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+#articleListTopic {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+#articleListVotes {
+  grid-column: 3;
+  grid-row: 3;
 }
 
 @keyframes App-logo-spin {
