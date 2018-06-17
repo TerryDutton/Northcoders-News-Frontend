@@ -59,8 +59,8 @@ class App extends Component {
           <Route path={`/api/users`} component={UserList}/>
           <Route path={`/api/*`} render={props => <RenderError {...props} err={{response: {status: 404}}}/>}/>
           <Route path={`/api`} component={Welcome}/>
-          <Route path={`/*`} render={props => <RenderError {...props} err={{response: {status: 404}}}/>}/>
           <Route path={`/`} component={Welcome}/>
+          <Route path={`/*`} render={props => <RenderError {...props} err={{response: {status: 404}}}/>}/>
         </Switch>}
       </div>
       </BrowserRouter>
