@@ -13,7 +13,7 @@ class LogBar extends React.Component{
       <h6 className="loginWelcome">Welcome, <Link to={`/api/users/${user.username}`}>{(user.name || '').split(' ')[0] || user.username}</Link></h6>
       <input type="button" value="Log Out" onClick={logOut}/>
     </Fragment> : <Fragment>
-      <input type="text" onChange={this.handleInput} onKeyUp={this.handleKeyPress}/>
+      <input type="text" className="textInput" onChange={this.handleInput} onKeyUp={this.handleKeyPress}/>
       <input type="button" value="Log In" onClick={this.handleLogin}/>
     </Fragment>} </span>);
   }

@@ -4,7 +4,7 @@ function SubmitComment({handleInput, handleSubmit}){
   return (
     <form>
       <p>Submit comment:</p>
-      <textarea onChange={handleInput}/><br/>
+      <textarea className="textInput" onChange={handleInput}/><br/>
       <input type="button" value="Submit" onClick={handleSubmit}/>
     </form>
   );

@@ -3,7 +3,8 @@ import React from 'react';
 function RenderError({err}){
 
   let userMsg = 'There was an unknown error.'; 
-  const {status} = err.response;
+  let status;
+  if (err && err.response) status = err.response.status;
   const {message} = err;
   if ( message === 'Network Error') userMsg =  "Cannot connect to the database. Please check your network settings, or try refreshing the page.";
   else if (status === 400 || status === 404) userMsg = "Page not found. Please check the address is typed correctly."; 

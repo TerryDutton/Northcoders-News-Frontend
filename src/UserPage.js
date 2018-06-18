@@ -46,14 +46,14 @@ class UserPage extends React.Component{
     else {
       const {username} = thisPageUser;
       return (
-        <div>
+        <div className="userPage">
           <RenderUserData user={thisPageUser}/>
           <div>
-            <p>{username} has {articles.length} articles:</p>
+            <h4>{`${username}'s articles (${articles.length} total):`}</h4>
             <RenderArticleList articles={articles}/>
           </div>
           <div>
-            <p>and {comments.length} comments:</p>
+          <h4>{`${username}'s comments (${comments.length} total):`}</h4>
             <RenderComments comments={comments} user={loggedInAs}/>
           </div>
         </div>

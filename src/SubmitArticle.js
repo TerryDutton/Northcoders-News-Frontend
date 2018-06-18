@@ -15,16 +15,16 @@ class SubmitArticle extends React.Component {
   render(){
     const {title, body, belongs_to, message} = this.state;
     return !this.props.user ? <p>You must be logged in to submit an article.</p> : (
-      <form>
+      <form className="submitArticleForm">
         <h6>Title</h6>
-        <input type="text" onChange={e => this.handleInput(e, 'title')}/>
+        <input type="text" id="titleInput" className="textInput" onChange={e => this.handleInput(e, 'title')}/>
         <h6>Topic</h6>
         <select onChange={e => this.handleInput(e, 'belongs_to')}>
           {[<option key={'defaultTopicSelectorOpt'} selected disabled value={''}>Please select a topic</option>,
             ...(this.props.topics || []).map(({_id, title}) => <option key={`${_id}Opt`}value={_id}>{title}</option>)]}
         </select>
         <h6>Body</h6>
-        <textarea onChange={e => this.handleInput(e, 'body')}/><br/>
+        <textarea id="articleInput" className="textInput" onChange={e => this.handleInput(e, 'body')}/><br/>
         <input type="button" disabled={!(title && body && belongs_to)} value="Submit" onClick={this.submitArticle}/>
         <p>
           {message}

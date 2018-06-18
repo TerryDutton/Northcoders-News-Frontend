@@ -49,7 +49,8 @@ class App extends Component {
           </div>
           <NavBar topics={topics}/>
         </header>
-        {err ? <RenderError err={err}/> : <Switch>
+        {err ? <RenderError err={err}/> : <div className="appBody">
+        <Switch>
           <Route path={`/api/articles/:articleID/comments`} render={props => <CommentsDisplay {...props} user={user}/>}/>
           <Route path={`/api/articles/submit`} render={props => <SubmitArticle {...props} topics={topics} user={user}/>}/>
           <Route path={`/api/articles/:articleID`} render={props => <SingleArticleDisplay {...props} user={user}/>}/>
@@ -61,7 +62,8 @@ class App extends Component {
           <Route path={`/api`} component={Welcome}/>
           <Route exact path={`/`} component={Welcome}/>
           <Route path={`/*`} render={props => <RenderError {...props} err={{response: {status: 404}}}/>}/>
-        </Switch>}
+        </Switch>
+        </div>}
       </div>
       </BrowserRouter>
     );
