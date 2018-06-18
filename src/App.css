@@ -195,6 +195,7 @@ li {
 
 .textInput {
   background-color: inherit;
+  color: white;
 }
 
 @keyframes App-logo-spin {
