@@ -198,6 +198,11 @@ li {
   color: white;
 }
 
+.avatarLg {
+  max-width: 300px;
+  max-height: 300px;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
