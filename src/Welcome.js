@@ -5,12 +5,14 @@ import RenderError from './RenderError';
 import RenderWelcomeStats from './RenderWelcomeStats';
 import RenderArticleList from './RenderArticleList';
 import RenderComments from './RenderComments';
+import Loading from './Loading.js';
 
 class Welcome extends React.Component {
   state = {
     comments: [], 
     articles: [], 
-    err: null
+    err: null, 
+    isLoading: true
   }
 
   componentDidMount(){
@@ -19,19 +21,19 @@ class Welcome extends React.Component {
       const [{articles}, {comments}] = [aRes.data, cRes.data];
       articles.sort((thisArticle, thatArticle) => thatArticle.votes - thisArticle.votes);
       comments.sort((thisComment, thatComment) => thatComment.created_at - thisComment.created_at);
-      return this.setState({comments, articles});
+      return this.setState({comments, articles, isLoading: false});
     })
     .catch(err => {
       console.log(err); 
-      return this.setState({err});
+      return this.setState({err, isLoading: false});
     });
   }
 
   render(){
-    const {comments, articles, err} = this.state;
+    const {comments, articles, err, isLoading} = this.state;
     const commentStats = this.assessData(comments); 
     const articleStats = this.assessData(articles); 
-    return err ? <RenderError err={err}/> : (
+    return err ? <RenderError err={err}/> : isLoading ? <Loading/> : (
       <div className="welcomePage">
         <h1 id="welcomeTitle">Welcome to Northcoders News!</h1>
         <h3 id="welcomeGeneralStats">{`We have ${articles.length} articles by ${articleStats.totalNumberOf} authors for you to browse, and ${comments.length} comments by ${commentStats.totalNumberOf} commenters you can add to.`}</h3>
